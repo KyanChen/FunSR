@@ -94,7 +94,7 @@ with gr.Blocks() as demo:
     image_output = gr.outputs.Image(label='SR Result', type='numpy')
     with gr.Row():
         checkpoint = gr.inputs.Radio(['UC', 'AID'], label='Checkpoint')
-        scale = gr.Slider(1, 12, value=4.0, step=0.1, label='scale')
+        scale = gr.Slider(1, 10, value=4.0, step=0.1, label='scale')
 
 io = gr.Interface(fn=sr_func,
                   inputs=[image_input,
