@@ -1,7 +1,4 @@
 __pycache__
-data/
 .idea
-checkpoints/
-results/
-pretrained/
-.DS_Store
+.DS_store
+pretrain

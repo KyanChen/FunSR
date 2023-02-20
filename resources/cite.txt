@@ -1,0 +1,8 @@
+@misc{chen2023continuous,
+      title={Continuous Remote Sensing Image Super-Resolution based on Context Interaction in Implicit Function Space},
+      author={Keyan Chen and Wenyuan Li and Sen Lei and Jianqi Chen and Xiaolong Jiang and Zhengxia Zou and Zhenwei Shi},
+      year={2023},
+      eprint={2302.08046},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
