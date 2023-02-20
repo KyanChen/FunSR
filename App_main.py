@@ -1,11 +1,13 @@
 import numpy as np
-
+import os
+os.system('nvidia-smi')
+os.system('ls /usr/local')
+os.system('pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu116')
+os.system('pip install -U openmim')
+os.system('mim install mmcv-full')
 import models
 import gradio as gr
 
-# os.system('nvidia-smi')
-# os.system('ls /usr/local')
-# os.system('pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113')
 import torch
 from torchvision import transforms
 from torchvision.transforms import InterpolationMode
@@ -91,7 +93,7 @@ with gr.Blocks() as demo:
     # image_LR_output = gr.outputs.Image(label='LR Img', type='numpy')
     image_output = gr.outputs.Image(label='SR Result', type='numpy')
     with gr.Row():
-        checkpoint = gr.inputs.Radio(['WHU', 'INRIA'], label='Checkpoint')
+        checkpoint = gr.inputs.Radio(['UC', 'AID'], label='Checkpoint')
         scale = gr.Slider(1, 12, value=4.0, step=0.1, label='scale')
 
 io = gr.Interface(fn=sr_func,
