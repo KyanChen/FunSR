@@ -1,0 +1,8 @@
+tensorboardX
+matplotlib
+einops
+pyyaml
+opencv-python
+pandas
+scikit-image
+tqdm
