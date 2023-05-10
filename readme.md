@@ -113,7 +113,7 @@ The config file of interpolation-based SR models is **configs/test_interpolate.y
 Run ```python test_interpolate_sr.py``` to test the interpolation-based SR models.
 
 ## 4. [optional] Result Visualization
-Some visualization tools are provided in the *tools/paper_vis_tools* folder, you can refer to the files in this folder for details.
+Some visualization tools are provided in the **tools/paper_vis_tools** folder, you can refer to the files in this folder for details.
 
 
 ## 5. [optional] Model Download
