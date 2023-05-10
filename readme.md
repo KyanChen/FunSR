@@ -106,7 +106,7 @@ The config file of continuous-scale SR models is **configs/baselines/test_1x-5x_
 #### 3.4.2 Testing
 Run ```python test_diinn_arbrcan_sadn_overnet.py``` to test the continuous-scale SR models.
 
-#### 3.5 [Optional] Interpolation-based SR models (Bicubic, Bilinear)
+### 3.5 [Optional] Interpolation-based SR models (Bicubic, Bilinear)
 #### 3.5.1 Config file
 The config file of interpolation-based SR models is **configs/test_interpolate.yaml**.
 #### 3.5.2 Testing
