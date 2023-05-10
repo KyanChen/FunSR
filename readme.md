@@ -88,29 +88,32 @@ The config file of FunSR is **configs/test_INR_diinn_arbrcan_funsr_overnet.yaml*
 #### 3.1.2 Testing
 Run ```python test_inr_diinn_arbrcan_sadnarc_funsr_overnet.py``` to test the FunSR model. And you can modify the ArgumentParser parameters in this file according to the situation.
 
-### 3.2 [Optional] Fixed-scale SR models (TransEnet, SRCNN, LGCNet, FSRCNN, DCM, VDSR)
+### 3.2 [Optional] Interpolation-based SR models (Bicubic, Bilinear)
 #### 3.2.1 Config file
-The config file of fixed-scale SR models is **configs/baselines/test_CNN.yaml**.
+The config file of interpolation-based SR models is **configs/test_interpolate.yaml**.
 #### 3.2.2 Testing
+Run ```python test_interpolate_sr.py``` to test the interpolation-based SR models.
+
+### 3.3 [Optional] Fixed-scale SR models (TransEnet, SRCNN, LGCNet, FSRCNN, DCM, VDSR)
+#### 3.3.1 Config file
+The config file of fixed-scale SR models is **configs/baselines/test_CNN.yaml**.
+#### 3.3.2 Testing
 Run ```python test_cnn_sr.py``` to test the fixed-scale SR models.
 
-### 3.3 [Optional] Continuous-scale SR models (LIIF, MetaSR, ALIIF)
-#### 3.3.1 Config file
+### 3.4 [Optional] Continuous-scale SR models (LIIF, MetaSR, ALIIF)
+#### 3.4.1 Config file
 The config file of continuous-scale SR models is **configs/baselines/test_1x-5x_INR_[liif, metasr, aliif].yaml**.
-#### 3.3.2 Testing
+#### 3.4.2 Testing
 Run ```python test_liif_metasr_aliff.py``` to test the continuous-scale SR models.
 
-### 3.4 [Optional] Continuous-scale SR models (DIINN, ArbRCAN, SADN, OverNet)
-#### 3.4.1 Config file
+### 3.5 [Optional] Continuous-scale SR models (DIINN, ArbRCAN, SADN, OverNet)
+#### 3.5.1 Config file
 The config file of continuous-scale SR models is **configs/baselines/test_1x-5x_INR_diinn_arbrcan_sadn_overnet.yaml**.
-#### 3.4.2 Testing
+#### 3.5.2 Testing
 Run ```python test_diinn_arbrcan_sadn_overnet.py``` to test the continuous-scale SR models.
 
-### 3.5 [Optional] Interpolation-based SR models (Bicubic, Bilinear)
-#### 3.5.1 Config file
-The config file of interpolation-based SR models is **configs/test_interpolate.yaml**.
-#### 3.5.2 Testing
-Run ```python test_interpolate_sr.py``` to test the interpolation-based SR models.
+### 3.6 [Optional] Multi-resolution evaluation
+In order to evaluate the models of different super-resolution ratios conveniently, we provide a batch evaluation script, which is located in **scripts/test_script.py**, which can be run ```python scripts/test_script.py```
 
 ## 4. [optional] Result Visualization
 Some visualization tools are provided in the **tools/paper_vis_tools** folder, you can refer to the files in this folder for details.
