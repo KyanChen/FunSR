@@ -1,6 +1,6 @@
 # FunSR - 基于隐式函数空间中的上下文交互的连续遥感图像超分辨率
 
-[中文]() [English]()
+[English](/readme.md) | 简体中文
 
 本项目是论文"Continuous Remote Sensing Image Super-Resolution based on Context Interaction in Implicit Function Space"的Pytorch实现
 
