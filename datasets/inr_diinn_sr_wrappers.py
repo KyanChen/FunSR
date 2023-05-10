@@ -1,18 +1,9 @@
 import copy
-import functools
 import os
-import random
-import math
-from PIL import Image
-
-import numpy as np
 import torch
-from einops import rearrange
 from torch.utils.data import Dataset
 from torchvision import transforms
-
 from datasets import register
-from utils import to_pixel_samples, to_coordinates
 
 import torchvision.transforms.functional as TF
 import random

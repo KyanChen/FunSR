@@ -2,10 +2,14 @@ test_dataset:
   dataset:
     name: hr_data_loader
     args:
-#      root_path: /data/kyanchen/datasets/UC/256
+#      root_path: samples/UCMerced
 #      split_file: data_split/UC_split.json
-      root_path: /data/kyanchen/datasets/AID
-      split_file: data_split/AID_split.json
+#      root_path: samples/AID
+#      split_file: data_split/AID_split.json
+
+      root_path: samples/UCMerced
+      split_file: samples/uc_split.json
+
       split_key: test
       cache: none
   wrapper:
@@ -15,7 +19,7 @@ test_dataset:
       patch_size: 48
       test_mode: true
       augment: false
-  batch_size: 64
+  batch_size: 32
 
 eval_type: psnr+ssim
 

@@ -7,7 +7,7 @@ from torch.nn.init import xavier_uniform_
 from einops import rearrange
 # from mmcv.runner.base_module import BaseModule, ModuleList
 # from mmcv.cnn import build_norm_layer
-from mmcv.cnn.bricks.transformer import FFN, PatchEmbed
+# from mmcv.cnn.bricks.transformer import FFN, PatchEmbed
 # from mmcv.cnn.utils.weight_init import trunc_normal_
 # from mmcv.cnn.bricks.registry import DROPOUT_LAYERS
 

@@ -2,10 +2,14 @@ train_dataset:
   dataset:
     name: hr_data_loader
     args:
-      root_path: /data/kyanchen/datasets/UC/256
-      split_file: data_split/UC_split.json
-#      root_path: /data/kyanchen/datasets/AID
+#      root_path: samples/UCMerced
+#      split_file: data_split/UC_split.json
+#      root_path: samples/AID
 #      split_file: data_split/AID_split.json
+
+      root_path: samples/UCMerced
+      split_file: samples/uc_split.json
+
       split_key: train
       cache: none
   wrapper:
@@ -24,10 +28,14 @@ val_dataset:
   dataset:
     name: hr_data_loader
     args:
-      root_path: /data/kyanchen/datasets/UC/256
-      split_file: data_split/UC_split.json
-#      root_path: /data/kyanchen/datasets/AID
+#      root_path: samples/UCMerced
+#      split_file: data_split/UC_split.json
+#      root_path: samples/AID
 #      split_file: data_split/AID_split.json
+
+      root_path: samples/UCMerced
+      split_file: samples/uc_split.json
+
       split_key: test
 #      first_k: 128
       cache: none
@@ -70,13 +78,13 @@ model:
     decoder:
       name: sirens
       args:
-        num_inner_layers: 9
+        num_inner_layers: 3
         is_residual: true
     global_decoder:
       name: sirens
       is_proj: true
       args:
-        num_inner_layers: 9
+        num_inner_layers: 3
         is_residual: true
     encoder_rgb: true
     n_forward_times: 1
@@ -95,14 +103,14 @@ optimizer:
 #  args:
 #    lr: 0.0001
 
-epoch_max: 4000
+epoch_max: 2000
 
 lr_scheduler:
 #  name: CosineAnnealingLR
 #  T_max: 1500
 #  eta_min: 1.e-7
   name: CosineAnnealingWarmUpLR
-  epochs: 4000
+  epochs: 2000
   warm_up_epochs: 50
   eta_min: 1.e-8
 

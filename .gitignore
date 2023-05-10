@@ -3,5 +3,7 @@ data/
 .idea
 checkpoints/
 results/
+pretrain
 pretrained/
 .DS_Store
+tmp

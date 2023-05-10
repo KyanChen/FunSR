@@ -2,10 +2,14 @@ train_dataset:
   dataset:
     name: hr_data_loader
     args:
-#      root_path: /data/kyanchen/datasets/UC/256
+#      root_path: samples/UCMerced
 #      split_file: data_split/UC_split.json
-      root_path: /data/kyanchen/datasets/AID
-      split_file: data_split/AID_split.json
+#      root_path: samples/AID
+#      split_file: data_split/AID_split.json
+
+      root_path: samples/UCMerced
+      split_file: samples/uc_split.json
+
       split_key: train
       cache: none
   wrapper:
@@ -16,17 +20,21 @@ train_dataset:
       augment: true
       val_mode: false
       test_mode: false
-  batch_size: 32
+  batch_size: 16
   num_workers: 4
 
 val_dataset:
   dataset:
     name: hr_data_loader
     args:
-#      root_path: /data/kyanchen/datasets/UC/256
+#      root_path: samples/UCMerced
 #      split_file: data_split/UC_split.json
-      root_path: /data/kyanchen/datasets/AID
-      split_file: data_split/AID_split.json
+#      root_path: samples/AID
+#      split_file: data_split/AID_split.json
+
+      root_path: samples/UCMerced
+      split_file: samples/uc_split.json
+
       split_key: val
       first_k: 128
       cache: none
@@ -48,17 +56,17 @@ data_norm:
   gt: {sub: [0.5], div: [0.5]}
 
 model:
-#  name: diinn
+  name: diinn
 #  name: arbrcan
 #  name: sadnarc
 #  name: edsr-sadn
 #  name: rdn-sadn
-  name: overnet
+#  name: overnet
   args:
     encoder_spec:
-#      name: edsr-baseline
+      name: edsr-baseline
 #      name: rdn
-      name: rcan
+#      name: rcan
       args:
         no_upsampling: true
 
@@ -67,7 +75,7 @@ optimizer:
   args:
     lr: 1.e-4
 
-epoch_max: 3000
+epoch_max: 2000
 
 lr_scheduler:
 #  name: CosineAnnealingLR

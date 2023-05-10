@@ -1,6 +1,6 @@
 from models import register
 from einops import rearrange
-from mmcv.cnn import build_norm_layer, constant_init, trunc_normal_init
+# from mmcv.cnn import build_norm_layer, constant_init, trunc_normal_init
 import torch
 import torch.nn as nn
 import torch.nn.functional as F

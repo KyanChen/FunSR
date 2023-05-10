@@ -148,7 +148,8 @@ class EDSR(nn.Module):
         return x
 
     def load_state_dict(self, state_dict, strict=True):
-        state_dict = torch.load(state_dict, map_location='cpu')
+        state_dict = torch.hub.load_state_dict_from_url(self.url, model_dir='pretrained')
+        # state_dict = torch.load(state_dict, map_location='cpu')
         own_state = self.state_dict()
         print('loading pretrain model')
         for name, param in state_dict.items():

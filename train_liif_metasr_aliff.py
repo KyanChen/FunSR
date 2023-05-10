@@ -2,7 +2,6 @@ import argparse
 import json
 import math
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 
 import yaml
 import torch
@@ -16,7 +15,7 @@ import models
 import utils
 from test_inr_liif_metasr_aliif import eval_psnr
 
-device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 def make_data_loader(spec, tag=''):
     if spec is None:
@@ -112,7 +111,7 @@ def train(train_loader, model, optimizer):
     return train_loss.item()
 
 
-def main(config_, save_path):
+def main(config_, save_path, args):
     global config, log, writer
     config = config_
     log, writer = utils.set_save_path(save_path)
@@ -128,10 +127,9 @@ def main(config_, save_path):
 
     model, optimizer, epoch_start, lr_scheduler = prepare_training()
 
-    if device != 'cpu':
-        n_gpus = len(os.environ['CUDA_VISIBLE_DEVICES'].split(','))
-        if n_gpus > 1:
-            model = nn.parallel.DataParallel(model)
+    n_gpus = args.n_gpus
+    if n_gpus > 1:
+        model = nn.parallel.DataParallel(model)
 
     epoch_max = config['epoch_max']
     epoch_val_interval = config.get('epoch_val_interval')
@@ -205,23 +203,18 @@ def main(config_, save_path):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    # parser.add_argument('--config', default='configs/baselines/train_1x-5x_INR_liif.yaml')
+    parser.add_argument('--config', default='configs/baselines/train_1x-5x_INR_liif.yaml')
     # parser.add_argument('--config', default='configs/baselines/train_1x-5x_INR_metasr.yaml')
-    parser.add_argument('--config', default='configs/baselines/train_1x-5x_INR_aliif.yaml')
-    parser.add_argument('--name', default='EXP20221204_1')
-    parser.add_argument('--tag', default=None)
-    parser.add_argument('--gpu', default='0')
+    # parser.add_argument('--config', default='configs/baselines/train_1x-5x_INR_aliif.yaml')
+    parser.add_argument('--n_gpus', default=1, type=int)
+    parser.add_argument('--save_name', default='liff')
     args = parser.parse_args()
 
     with open(args.config, 'r') as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
         print('config loaded.')
 
-    save_name = args.name
-    if save_name is None:
-        save_name = '_' + args.config.split('/')[-1][:-len('.yaml')]
-    if args.tag is not None:
-        save_name += '_' + args.tag
+    save_name = args.save_name
     save_path = os.path.join('./checkpoints', save_name)
 
-    main(config, save_path)
+    main(config, save_path, args)

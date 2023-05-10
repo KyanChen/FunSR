@@ -1,0 +1,23 @@
+{
+    "train": [
+        "agricultural/agricultural01.tif",
+        "airplane/airplane00.tif",
+        "baseballdiamond/baseballdiamond00.tif",
+        "beach/beach00.tif",
+        "buildings/buildings00.tif"
+    ],
+    "val": [
+        "agricultural/agricultural01.tif",
+        "airplane/airplane00.tif",
+        "baseballdiamond/baseballdiamond00.tif",
+        "beach/beach00.tif",
+        "buildings/buildings00.tif"
+    ],
+    "test": [
+        "agricultural/agricultural00.tif",
+        "airplane/airplane01.tif",
+        "baseballdiamond/baseballdiamond01.tif",
+        "beach/beach01.tif",
+        "buildings/buildings01.tif"
+    ]
+}

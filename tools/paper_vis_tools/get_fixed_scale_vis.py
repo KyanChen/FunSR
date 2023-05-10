@@ -37,4 +37,3 @@ for cp in ['epoch-last.pth']:
         #           )
 
 os.system(f'zip -q -r vis_{model_name}_{dataset_name}_4x_testset.zip vis_{model_name}_{dataset_name}_4x_testset')
-os.system(f'aws s3 cp vis_{model_name}_{dataset_name}_4x_testset.zip s3://xhs.bravo/user/kyanchen/tmp/')

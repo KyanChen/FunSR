@@ -17,13 +17,8 @@ import datasets
 import models
 import utils
 
+
 device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
-
-def batched_predict(model, inp, coord, bsize):
-    with torch.no_grad():
-        pred = model(inp, coord)
-    return pred
-
 
 def eval_psnr(loader, class_names, model,
               data_norm=None, eval_type=None, save_fig=False,
@@ -140,10 +135,10 @@ def eval_psnr(loader, class_names, model,
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--config', default='configs/test_INR_mysr.yaml')
-    parser.add_argument('--model', default='checkpoints/EXP20220610_5/epoch-best.pth')
+    parser.add_argument('--config', default='configs/test_INR_liif_metasr_aliif.yaml')
+    parser.add_argument('--model', default='pretrain/EDSR_UC_ALIIF.pth')
     parser.add_argument('--scale_ratio', default=4, type=float)
-    parser.add_argument('--save_fig', default=False, type=bool)
+    parser.add_argument('--save_fig', default=True, type=bool)
     parser.add_argument('--save_path', default='tmp', type=str)
     parser.add_argument('--cal_metrics', default=True, type=bool)
     parser.add_argument('--return_class_metrics', default=False, type=bool)
@@ -152,14 +147,15 @@ if __name__ == '__main__':
 
     with open(args.config, 'r') as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
-    root_split_file = {'UC':
-        {
-            'root_path': '/data/kyanchen/datasets/UC/256',
-            'split_file': 'data_split/UC_split.json'
-        },
+    root_split_file = {
+        'UC':
+            {
+                'root_path': 'samples/UCMerced',
+                'split_file': 'samples/uc_split.json'
+            },
         'AID':
             {
-                'root_path': '/data/kyanchen/datasets/AID',
+                'root_path': 'samples/AID',
                 'split_file': 'data_split/AID_split.json'
             }
     }
@@ -183,8 +179,8 @@ if __name__ == '__main__':
     class_names = list(set([os.path.basename(os.path.dirname(x)) for x in file_names]))
 
     crop_border = config['test_dataset']['wrapper']['args']['scale_ratio'] + 5
-    dataset_name = os.path.basename(config['test_dataset']['dataset']['args']['split_file']).split('_')[0]
-    max_scale = {'UC': 5, 'AID': 12}
+    dataset_name = os.path.basename(config['test_dataset']['dataset']['args']['split_file']).split('_')[0].lower()
+    max_scale = {'uc': 5, 'aid': 12}
     if args.scale_ratio > max_scale[dataset_name]:
         crop_border = int((args.scale_ratio - max_scale[dataset_name]) / 2 * 48)
 

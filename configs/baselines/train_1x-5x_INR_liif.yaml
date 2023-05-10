@@ -2,10 +2,14 @@ train_dataset:
   dataset:
     name: hr_data_loader
     args:
-#      root_path: /data/kyanchen/datasets/UC/256
+#      root_path: samples/UCMerced
 #      split_file: data_split/UC_split.json
-      root_path: /data/kyanchen/datasets/AID
-      split_file: data_split/AID_split.json
+#      root_path: samples/AID
+#      split_file: data_split/AID_split.json
+
+      root_path: samples/UCMerced
+      split_file: samples/uc_split.json
+
       split_key: train
       cache: none
   wrapper:
@@ -18,17 +22,21 @@ train_dataset:
       val_mode: false
       test_mode: false
       return_cell: true
-  batch_size: 64
+  batch_size: 32
   num_workers: 4
 
 val_dataset:
   dataset:
     name: hr_data_loader
     args:
-#      root_path: /data/kyanchen/datasets/UC/256
+#      root_path: samples/UCMerced
 #      split_file: data_split/UC_split.json
-      root_path: /data/kyanchen/datasets/AID
-      split_file: data_split/AID_split.json
+#      root_path: samples/AID
+#      split_file: data_split/AID_split.json
+
+      root_path: samples/UCMerced
+      split_file: samples/uc_split.json
+
       split_key: val
       first_k: 128
       cache: none
@@ -42,7 +50,7 @@ val_dataset:
       val_mode: true
       test_mode: false
       return_cell: true
-  batch_size: 64
+  batch_size: 32
   num_workers: 4
 
 eval_type: psnr+ssim
@@ -55,9 +63,9 @@ model:
   name: liif
   args:
     encoder_spec:
-#      name: edsr-baseline
+      name: edsr-baseline
 #      name: rdn
-      name: rcan
+#      name: rcan
       args:
         no_upsampling: true
     imnet_spec:
@@ -71,7 +79,7 @@ optimizer:
   args:
     lr: 1.e-4
 
-epoch_max: 4000
+epoch_max: 2000
 
 lr_scheduler:
 #  name: CosineAnnealingLR

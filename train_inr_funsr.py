@@ -1,9 +1,6 @@
 import argparse
 import json
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
-# os.environ['CUDA_VISIBLE_DEVICES'] = '0,1,2,3,4,5,6,7'
-
 import yaml
 import torch
 import torch.nn as nn
@@ -16,7 +13,7 @@ import models
 import utils
 from test_inr_diinn_arbrcan_sadnarc_funsr_overnet import eval_psnr
 
-device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 def make_data_loader(spec, tag=''):
     if spec is None:
@@ -52,7 +49,7 @@ def make_data_loaders():
 def prepare_training():
     if config.get('resume') is not None:
         sv_file = torch.load(config['resume'])
-        model = models.make(sv_file['model'], load_sd=True).cuda()
+        model = models.make(sv_file['model'], load_sd=True).to(device)
         optimizer = utils.make_optimizer(
             model.parameters(), sv_file['optimizer'], load_sd=False)
         # epoch_start = sv_file['epoch'] + 1
@@ -69,7 +66,7 @@ def prepare_training():
         # for _ in range(epoch_start - 1):
         #     lr_scheduler.step()
     else:
-        model = models.make(config['model']).cuda()
+        model = models.make(config['model']).to(device)
         optimizer = utils.make_optimizer(
             model.parameters(), config['optimizer'])
         epoch_start = 1
@@ -93,11 +90,11 @@ def train(train_loader, model, optimizer):
 
     data_norm = config['data_norm']
     t = data_norm['img']
-    img_sub = torch.FloatTensor(t['sub']).view(1, -1, 1, 1).cuda()
-    img_div = torch.FloatTensor(t['div']).view(1, -1, 1, 1).cuda()
+    img_sub = torch.FloatTensor(t['sub']).view(1, -1, 1, 1).to(device)
+    img_div = torch.FloatTensor(t['div']).view(1, -1, 1, 1).to(device)
     t = data_norm['gt']
-    gt_sub = torch.FloatTensor(t['sub']).view(1, 1, -1).cuda()
-    gt_div = torch.FloatTensor(t['div']).view(1, 1, -1).cuda()
+    gt_sub = torch.FloatTensor(t['sub']).view(1, 1, -1).to(device)
+    gt_div = torch.FloatTensor(t['div']).view(1, 1, -1).to(device)
 
     for batch in tqdm(train_loader, leave=False, desc='train'):
         # import pdb
@@ -129,7 +126,7 @@ def train(train_loader, model, optimizer):
     return train_loss.item()
 
 
-def main(config_, save_path):
+def main(config_, save_path, args):
     global config, log, writer
     config = config_
     log, writer = utils.set_save_path(save_path)
@@ -145,7 +142,7 @@ def main(config_, save_path):
 
     model, optimizer, epoch_start, lr_scheduler = prepare_training()
 
-    n_gpus = len(os.environ['CUDA_VISIBLE_DEVICES'].split(','))
+    n_gpus = args.n_gpus
     if n_gpus > 1:
         model = nn.parallel.DataParallel(model)
 
@@ -222,20 +219,15 @@ def main(config_, save_path):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--config', default='configs/train_1x-5x_INR_funsr.yaml')
-    parser.add_argument('--name', default='tmp')
-    parser.add_argument('--tag', default=None)
-    parser.add_argument('--gpu', default='0')
+    parser.add_argument('--n_gpus', default=1, type=int)
+    parser.add_argument('--save_name', default='funsr')
     args = parser.parse_args()
 
     with open(args.config, 'r') as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
         print('config loaded.')
 
-    save_name = args.name
-    if save_name is None:
-        save_name = '_' + args.config.split('/')[-1][:-len('.yaml')]
-    if args.tag is not None:
-        save_name += '_' + args.tag
+    save_name = args.save_name
     save_path = os.path.join('./checkpoints', save_name)
 
-    main(config, save_path)
+    main(config, save_path, args)
